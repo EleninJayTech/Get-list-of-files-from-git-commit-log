@@ -43,6 +43,11 @@ function target_select_view(){
 		ext_html += `<a class="ui teal label btnExt" href="#" data-ext="${ext}">${ext}&nbsp;✖</a>`;
 	});
 	
+	if( ext_list === '' ){
+		Common.setCookie('ext_list', '', {days:-1});
+	} else {
+		Common.setCookie('ext_list', ext_list);
+	}
 	el_selectExtList.html(ext_html);
 }
 
@@ -60,6 +65,28 @@ function delete_target(target_ext){
 }
 
 /**
+ * 확장자 추가하기
+ */
+function add_target_ext(){
+	let el_add_ext = $("input[name='add_ext']");
+	let add_ext = el_add_ext.val();
+	if( $.trim(add_ext) === '' ){
+		return true;
+	}
+	
+	delete_target(add_ext);
+
+	let el_selectExtList = $(".selectExtList");
+	let ext_list = el_selectExtList.data('ext-list');
+	let ext_list_arr = ext_list.split('|');
+	ext_list_arr.push(add_ext);
+	let ext_list_str = ext_list_arr.join('|');
+	el_selectExtList.data('ext-list', ext_list_str).attr('data-ext-list', ext_list_str);
+	
+	target_select_view();
+}
+
+/**
  * 로그를 파일 목록으로 변환
  */
 function log_change(){
@@ -72,7 +99,11 @@ function log_change(){
 	let next_log_text = '';
 	if( prev_log_text !== '' ){
 		check_target.forEach(function(target, idx){
-			const regexp = new RegExp(`${target}:.+\n`,'g');
+			let pattern = `${target}:.+\n`;
+			if( target === 'Rename' ){
+				pattern = `${target}:.+\(from`;
+			}
+			const regexp = new RegExp(pattern,'g');
 			const matches = prev_log_text.matchAll(regexp);
 			for (const match of matches) {
 				// console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
@@ -91,6 +122,14 @@ function log_change(){
 if( typeof jQuery == 'function' ){
 	jQuery(function($){
 		$('.ui.radio.checkbox').checkbox();
+		
+		// todo 최초 접속시 쿠키에 저장된 ext-list 가져오기
+		let ext_list = Common.getCookie('ext_list');
+		if( $.trim(ext_list) !== '' ){
+			// 초기 셋팅 css|js|php|jsp|asp|sql|html
+			$(".selectExtList").data('ext-list', ext_list).attr('data-ext-list', ext_list);
+		}
+		
 		checked_target_select();
 		toggle_target_select_wrap();
 		target_select_view();
@@ -129,5 +168,20 @@ if( typeof jQuery == 'function' ){
 			e.preventDefault();
 			return false;
 		});
+	});
+	
+	// 확장자 추가
+	$(".btnAddExt").on('click', function(e){
+		add_target_ext();
+		e.preventDefault();
+		return false;
+	});
+	$("input[name='add_ext']").on('keydown', function(key){
+		if( key.key === "Enter" ){
+			add_target_ext();
+			
+			key.preventDefault();
+			return false;
+		}
 	});
 }

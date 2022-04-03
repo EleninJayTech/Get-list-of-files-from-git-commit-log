@@ -14,4 +14,4 @@ a:hover, a:active, a:focus{text-decoration: underline;}
 .tac{text-align: center;}
 
 .cursor_pointer{cursor: pointer;}
-.display_none{display:none;}
+.display_none{display:none !important;}

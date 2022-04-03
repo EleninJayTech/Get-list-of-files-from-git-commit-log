@@ -37,14 +37,7 @@
 						<i class="inverted circular plus square outline link icon btnAddExt"></i>
 					</div>
 					<p></p>
-					<div class="selectExtList select_ext_list" data-ext-list="css|js|php|jsp|asp|sql">
-						<a class="ui teal label btnExt" href="#" data-ext="css">css&nbsp;✖</a>
-						<a class="ui teal label btnExt" href="#" data-ext="js">js&nbsp;✖</a>
-						<a class="ui teal label btnExt" href="#" data-ext="php">php&nbsp;✖</a>
-						<a class="ui teal label btnExt" href="#" data-ext="jsp">jsp&nbsp;✖</a>
-						<a class="ui teal label btnExt" href="#" data-ext="asp">asp&nbsp;✖</a>
-						<a class="ui teal label btnExt" href="#" data-ext="sql">sql&nbsp;✖</a>
-					</div>
+					<div class="selectExtList select_ext_list" data-ext-list="css|js|php|jsp|asp|sql"></div>
 				</div>
 
 				<h3>From</h3>
@@ -56,6 +49,14 @@
 				<label class="to_log">
 					<textarea id="to_log" readonly></textarea>
 				</label>
+				
+				<p></p>
+				<div class="inline field">
+					<a href="#" id="copy_clipboard" class="ui black button" data-clipboard-target="#to_log">Copy to clipboard</a>
+					<div id="copied_alert" class="ui left pointing label display_none">
+						Copied !
+					</div>
+				</div>
 			</form>
 		</div>
 
@@ -71,5 +72,6 @@
 	<script src="./semantic_ui/semantic.min.js"></script>
 	<script src="./index.js"></script>
 	<script src="./common.js"></script>
+	<script src="./clipboard.min.js"></script>
 </body>
 </html>

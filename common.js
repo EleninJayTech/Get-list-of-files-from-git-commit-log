@@ -1,5 +1,21 @@
 Common={
 	/**
+	 * 배열에서 대상 요소 삭제
+	 * @param array
+	 * @param item
+	 */
+	removeArrayItem:function(array, item){
+		for(let i in array){
+			if(array[i]===item){
+				array.splice(i,1);
+				break;
+			}
+		}
+		
+		return array;
+	},
+	
+	/**
 	 * 쿠키생성
 	 * @doc setCookie|쿠키생성
 	 * @param name

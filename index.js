@@ -96,10 +96,13 @@ function log_change(){
 	let prev_log_text = el_from_log.val();
 	
 	let check_target = ['Modified', 'Rename', 'Added', 'Deleted'];
-	
+	let check_target_2 = ['M ', 'R ', 'A ', 'D '];
+
 	let log_text_arr = [];
 	let next_log_text = '';
 	if( prev_log_text !== '' ){
+		let _count = 0;
+		// tortoisegit log
 		check_target.forEach(function(target, idx){
 			const regexp = new RegExp(`${target}\:.+\n`,'g');
 			const matches = prev_log_text.matchAll(regexp);
@@ -113,8 +116,31 @@ function log_change(){
 					log_text = $.trim(log_text);
 				}
 				log_text_arr.push(log_text);
+				_count++;
 			}
 		});
+		
+		// git log --name-status
+		check_target_2.forEach(function(target, idx){
+			const regexp = new RegExp(`${target}.+\n`,'g');
+			const matches = prev_log_text.matchAll(regexp);
+			for (const match of matches) {
+				let text_line = match[0];
+				let log_text = text_line.replace(`${target}`, '');
+				log_text = $.trim(log_text);
+				if( target === 'R ' ){
+					log_text = log_text.replace(/\(from.+\)/, '');
+					log_text = $.trim(log_text);
+				}
+				log_text_arr.push(log_text);
+				_count++;
+			}
+		});
+		
+		// git log --name-only
+		if( _count === 0 ){
+			// todo 추가 필요
+		}
 	}
 	log_text_arr = Array.from(new Set(log_text_arr));
 	

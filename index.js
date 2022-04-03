@@ -2,7 +2,7 @@
  * 쿠키에 저장된 타겟 값을 선택
  */
 function checked_target_select(){
-	let cookie_target_select = Common.getCookie('target_select');
+	let cookie_target_select = Common.getCookie('target_select') ?? 'all';
 	let el_target_select = $("input[name='target_select']");
 	el_target_select.attr({checked:false}).prop({checked:false});
 	$(`input[name='target_select'][value='${cookie_target_select}']`).attr({checked:true}).prop({checked:true});

@@ -99,17 +99,17 @@ function log_change(){
 	let next_log_text = '';
 	if( prev_log_text !== '' ){
 		check_target.forEach(function(target, idx){
-			let pattern = `${target}:.+\n`;
-			if( target === 'Rename' ){
-				pattern = `${target}:.+\(from`;
-			}
-			const regexp = new RegExp(pattern,'g');
+			const regexp = new RegExp(`${target}\:.+\n`,'g');
 			const matches = prev_log_text.matchAll(regexp);
 			for (const match of matches) {
 				// console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
 				let text_line = match[0];
 				let log_text = text_line.replace(`${target}:`, '');
 				log_text = $.trim(log_text);
+				if( target === 'Rename' ){
+					log_text = log_text.replace(/\(from.+\)/, '');
+					log_text = $.trim(log_text);
+				}
 				log_text_arr.push(log_text);
 			}
 		});

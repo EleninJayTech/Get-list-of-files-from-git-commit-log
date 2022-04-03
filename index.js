@@ -84,6 +84,8 @@ function add_target_ext(){
 	el_selectExtList.data('ext-list', ext_list_str).attr('data-ext-list', ext_list_str);
 	
 	target_select_view();
+	
+	el_add_ext.val('');
 }
 
 /**
@@ -115,6 +117,26 @@ function log_change(){
 		});
 	}
 	log_text_arr = Array.from(new Set(log_text_arr));
+	
+	let log_text_target_arr = [];
+	let target_select = $("input[name='target_select']:checked").val();
+	if( target_select === 'target' ){
+		let el_selectExtList = $(".selectExtList");
+		let ext_list = el_selectExtList.data('ext-list');
+		let ext_list_arr = ext_list.split('|');
+		log_text_arr.forEach(function(fileName, idx){
+			fileName = $.trim(fileName);
+			let fileExt = fileName.split('.').pop();
+			let fileExt_idx = $.inArray(fileExt, ext_list_arr);
+			
+			if( fileExt_idx > -1){
+				log_text_target_arr.push(fileName);
+			}
+		});
+		
+		log_text_arr = log_text_target_arr;
+	}
+	
 	next_log_text = log_text_arr.join("\n");
 	$("#to_log").val(next_log_text);
 }
@@ -123,7 +145,7 @@ if( typeof jQuery == 'function' ){
 	jQuery(function($){
 		$('.ui.radio.checkbox').checkbox();
 		
-		// todo 최초 접속시 쿠키에 저장된 ext-list 가져오기
+		// 최초 접속시 쿠키에 저장된 ext-list 가져오기
 		let ext_list = Common.getCookie('ext_list');
 		if( $.trim(ext_list) !== '' ){
 			// 초기 셋팅 css|js|php|jsp|asp|sql|html
@@ -138,6 +160,7 @@ if( typeof jQuery == 'function' ){
 		el_target_select.on('change', function(){
 			toggle_target_select_wrap();
 			save_cookie_target_select();
+			log_change();
 		});
 		
 		// from 이 변경되면 to 로 변환
@@ -165,6 +188,7 @@ if( typeof jQuery == 'function' ){
 			let ext = $(this).data('ext');
 			delete_target(ext);
 			target_select_view();
+			log_change();
 			e.preventDefault();
 			return false;
 		});
@@ -173,12 +197,14 @@ if( typeof jQuery == 'function' ){
 	// 확장자 추가
 	$(".btnAddExt").on('click', function(e){
 		add_target_ext();
+		log_change();
 		e.preventDefault();
 		return false;
 	});
 	$("input[name='add_ext']").on('keydown', function(key){
 		if( key.key === "Enter" ){
 			add_target_ext();
+			log_change();
 			
 			key.preventDefault();
 			return false;

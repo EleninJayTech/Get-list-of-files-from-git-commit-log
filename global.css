@@ -15,3 +15,5 @@ a:hover, a:active, a:focus{text-decoration: underline;}
 
 .cursor_pointer{cursor: pointer;}
 .display_none{display:none !important;}
+
+.copyright_wrap{margin-top: 50px;}

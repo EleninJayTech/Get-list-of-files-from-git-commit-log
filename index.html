@@ -37,26 +37,30 @@
 				</ul>
 			</div>
 			<form class="ui form">
+				<h3>추출 방법</h3>
 				<div class="inline fields">
 					<div class="field">
 						<div class="ui radio checkbox">
-							<input type="radio" name="target_select" value="all">
-							<label>ALL</label>
+							<input type="radio" name="target_select" value="default">
+							<label>기본 Default</label>
 						</div>
+						<!--
 						<div class="ui radio checkbox">
-							<input type="radio" name="target_select"  value="target">
-							<label>Select target EXT (대소문자 구분 Case sensitive)</label>
+							<input type="radio" name="target_select"  value="estimated_file">
+							<label>파일로 추청 estimated by file</label>
 						</div>
+						-->
 					</div>
 				</div>
-
-				<div class="targetSelectWrap target_select_wrap display_none">
+				
+				<h3>파일 확장자 필터</h3>
+				<div class="targetSelectWrap target_select_wrap">
 					<div class="ui icon input">
-						<input type="text" placeholder="Add EXT" name="add_ext">
+						<input type="text" placeholder="file extension filter" name="add_ext">
 						<i class="inverted circular plus square outline link icon btnAddExt"></i>
 					</div>
 					<p></p>
-					<div class="selectExtList select_ext_list" data-ext-list="css|js|php|jsp|asp|sql|html"></div>
+					<div class="selectExtList select_ext_list" data-ext-list=""></div>
 				</div>
 
 				<h3>From</h3>
@@ -106,8 +110,8 @@
 	</div>
 	
 	<script src="./semantic_ui/semantic.min.js"></script>
-	<script src="./index.js?1"></script>
-	<script src="./common.js?1"></script>
 	<script src="./clipboard.min.js"></script>
+	<script src="./common.js?1"></script>
+	<script src="./index.js?1"></script>
 </body>
 </html>

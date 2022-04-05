@@ -2,7 +2,7 @@
  * 쿠키에 저장된 타겟 값을 선택
  */
 function checked_target_select(){
-	let cookie_target_select = Common.getCookie('target_select') ?? 'all';
+	let cookie_target_select = Common.getCookie('target_select') ?? 'default';
 	let el_target_select = $("input[name='target_select']");
 	el_target_select.attr({checked:false}).prop({checked:false});
 	$(`input[name='target_select'][value='${cookie_target_select}']`).attr({checked:true}).prop({checked:true});
@@ -14,19 +14,6 @@ function checked_target_select(){
 function save_cookie_target_select(){
 	let target_select = $("input[name='target_select']:checked").val();
 	Common.setCookie('target_select', target_select);
-}
-
-/**
- * 파일 타겟 선택 박스
- */
-function toggle_target_select_wrap(){
-	let el_target_select = $("input[name='target_select']:checked");
-	let target_select = el_target_select.val();
-	let el_targetSelectWrap = $(".targetSelectWrap");
-	el_targetSelectWrap.addClass('display_none');
-	if( target_select === 'target' ){
-		el_targetSelectWrap.removeClass('display_none');
-	}
 }
 
 /**
@@ -144,11 +131,11 @@ function log_change(){
 	}
 	log_text_arr = Array.from(new Set(log_text_arr));
 	
-	let log_text_target_arr = [];
-	let target_select = $("input[name='target_select']:checked").val();
-	if( target_select === 'target' ){
-		let el_selectExtList = $(".selectExtList");
-		let ext_list = el_selectExtList.data('ext-list');
+	// 필터링
+	let el_selectExtList = $(".selectExtList");
+	let ext_list = el_selectExtList.data('ext-list');
+	if( ext_list && $.trim(ext_list) !== '' ){
+		let log_text_target_arr = [];
 		let ext_list_arr = ext_list.split('|');
 		log_text_arr.forEach(function(fileName, idx){
 			fileName = $.trim(fileName);
@@ -159,7 +146,6 @@ function log_change(){
 				log_text_target_arr.push(fileName);
 			}
 		});
-		
 		log_text_arr = log_text_target_arr;
 	}
 	
@@ -179,12 +165,10 @@ if( typeof jQuery == 'function' ){
 		}
 		
 		checked_target_select();
-		toggle_target_select_wrap();
 		target_select_view();
 
 		let el_target_select = $("input[name='target_select']");
 		el_target_select.on('change', function(){
-			toggle_target_select_wrap();
 			save_cookie_target_select();
 			log_change();
 		});

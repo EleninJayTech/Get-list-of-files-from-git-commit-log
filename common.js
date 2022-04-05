@@ -1,4 +1,6 @@
 Common={
+	version:'1.0',
+	
 	/**
 	 * 배열에서 대상 요소 삭제
 	 * @param array
@@ -66,4 +68,16 @@ Common={
 		}
 		return null;
 	}
-}
+};
+
+if( typeof jQuery == 'function' ){
+	jQuery(function($){
+		let ver_cookie = Common.getCookie('version');
+		let this_ver = Common.version;
+		if( ver_cookie !== this_ver ){
+			Common.setCookie('ext_list', '', {days:-1});
+			Common.setCookie('target_select', '', {days:-1});
+			Common.setCookie('version', this_ver);
+		}
+	});
+};

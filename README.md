@@ -4,7 +4,7 @@ Git 커밋 로그에서 파일 목록 가져오기 Get list of files from git co
 ---------------------------------------
 
 ### Github page
-[Go to Github page](https://eleninjaytech.github.io/Get-list-of-files-from-git-commit-log/)
+[Go to Github page](https://eleninjaytech.github.io/Get-list-of-files-from-git-commit-log/){:target="_blank"}
 
 ### 목록
 > TortoiseGit 로그에서 파일 목록 가져오기

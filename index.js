@@ -88,45 +88,66 @@ function log_change(){
 	let log_text_arr = [];
 	let next_log_text = '';
 	if( prev_log_text !== '' ){
-		let _count = 0;
-		// tortoisegit log
-		check_target.forEach(function(target, idx){
-			const regexp = new RegExp(`${target}\:.+\n`,'g');
-			const matches = prev_log_text.matchAll(regexp);
-			for (const match of matches) {
-				// console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
-				let text_line = match[0];
-				let log_text = text_line.replace(`${target}:`, '');
-				log_text = $.trim(log_text);
-				if( target === 'Rename' ){
-					log_text = log_text.replace(/\(from.+\)/, '');
-					log_text = $.trim(log_text);
-				}
-				log_text_arr.push(log_text);
-				_count++;
-			}
-		});
+		let target_select = $("input[name='target_select']:checked").val();
 		
-		// git log --name-status
-		check_target_2.forEach(function(target, idx){
-			const regexp = new RegExp(`${target}.+\n`,'g');
+		if( target_select === 'estimated_file' ){
+			// 파일 스러운것 체크
+			const regexp = new RegExp(/.+\.([\w].+)/,'g');
 			const matches = prev_log_text.matchAll(regexp);
 			for (const match of matches) {
 				let text_line = match[0];
-				let log_text = text_line.replace(`${target}`, '');
-				log_text = $.trim(log_text);
-				if( target === 'R ' ){
-					log_text = log_text.replace(/\(from.+\)/, '');
-					log_text = $.trim(log_text);
-				}
-				log_text_arr.push(log_text);
-				_count++;
+				let text_list_arr = text_line.split(' ');
+				text_list_arr.forEach(function(fileName, idx){
+					fileName = $.trim(fileName);
+					
+					// 특수문자 확인
+					let regex = new RegExp(/[\\\:\*\?\"\<\>\|]/);
+					if( regex.test(fileName) ){
+						return true;
+					}
+					
+					// 이메일 확인
+					let regex_2 = new RegExp(/[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/);
+					if( regex_2.test(fileName) ){
+						return true;
+					}
+					
+					log_text_arr.push(fileName);
+				});
 			}
-		});
-		
-		// git log --name-only
-		if( _count === 0 ){
-			// todo 추가 필요
+		} else {
+			// tortoisegit log
+			check_target.forEach(function(target, idx){
+				const regexp = new RegExp(`${target}\:.+\n`,'g');
+				const matches = prev_log_text.matchAll(regexp);
+				for (const match of matches) {
+					// console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
+					let text_line = match[0];
+					let log_text = text_line.replace(`${target}:`, '');
+					log_text = $.trim(log_text);
+					if( target === 'Rename' ){
+						log_text = log_text.replace(/\(from.+\)/, '');
+						log_text = $.trim(log_text);
+					}
+					log_text_arr.push(log_text);
+				}
+			});
+			
+			// git log --name-status
+			check_target_2.forEach(function(target, idx){
+				const regexp = new RegExp(`${target}.+\n`,'g');
+				const matches = prev_log_text.matchAll(regexp);
+				for (const match of matches) {
+					let text_line = match[0];
+					let log_text = text_line.replace(`${target}`, '');
+					log_text = $.trim(log_text);
+					if( target === 'R ' ){
+						log_text = log_text.replace(/\(from.+\)/, '');
+						log_text = $.trim(log_text);
+					}
+					log_text_arr.push(log_text);
+				}
+			});
 		}
 	}
 	log_text_arr = Array.from(new Set(log_text_arr));

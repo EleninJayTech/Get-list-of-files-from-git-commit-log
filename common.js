@@ -1,5 +1,5 @@
 Common={
-	version:'1.0',
+	version:'2.0',
 	
 	/**
 	 * 배열에서 대상 요소 삭제

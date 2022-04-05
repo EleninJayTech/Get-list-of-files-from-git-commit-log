@@ -112,6 +112,12 @@ function log_change(){
 						return true;
 					}
 					
+					// 점이 존재 하는지 확인
+					let regex_3 = new RegExp(/\./);
+					if( regex_3.test(fileName) === false ){
+						return true;
+					}
+					
 					log_text_arr.push(fileName);
 				});
 			}

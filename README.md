@@ -1,4 +1,4 @@
-Git 커밋 로그에서 파일 목록 가져오기 Get list of files from git commit log
+Git 로그 내용에서 파일 목록 가져오기 Get list of files from Git log content
 =============
 
 ---------------------------------------

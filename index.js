@@ -90,6 +90,9 @@ function log_change(){
 	if( prev_log_text !== '' ){
 		let target_select = $("input[name='target_select']:checked").val();
 		
+		// default 기본 기능 임시 제거, 현재 파일로 추정(estimated_file)이 기본값
+		target_select = 'estimated_file';
+		
 		if( target_select === 'estimated_file' ){
 			// 파일 스러운것 체크
 			const regexp = new RegExp(/.+\.([\w].+)/,'g');

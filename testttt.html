@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script>
+		$.ajax({
+			url: "http://61.253.101.44:58099/items/5", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+			data: { q: "333" },  // HTTP 요청과 함께 서버로 보낼 데이터
+			method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+			dataType: "json" // 서버에서 보내줄 데이터의 타입
+		})
+			// HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+			.done(function(json) {
+				console.log(json);
+			})
+			// HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
+			.fail(function(xhr, status, errorThrown) {
+				console.log(status, errorThrown);
+			})
+			//
+			.always(function(xhr, status) {
+				console.log('aaa');
+			});
+	</script>
+</head>
+<body>
+	<h1>asdfasdf</h1>
+</body>
+</html>

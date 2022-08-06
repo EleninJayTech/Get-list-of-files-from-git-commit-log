@@ -6,7 +6,7 @@
 	<script>
 		jQuery(function($){
 			$.ajax({
-				url:'https://www.eleninjaytech.com/items/5',
+				url:'http://www.eleninjaytech.com/items/5',
 				// url: "//192.168.0.15:8099/items/5", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
 				dataType:'json',
 				type:'get',
@@ -18,24 +18,6 @@
 				},
 				complete:function(){
 					console.log('eleninjaytech');
-				}
-			});
-		});
-
-		jQuery(function($){
-			$.ajax({
-				// url:'https://www.eleninjaytech.com:58099/items/5',
-				url: "https://192.168.0.15:5000/items/5", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-				dataType:'json',
-				type:'get',
-				data:{
-					'q':333
-				},
-				success:function(result){
-					console.log(result);
-				},
-				complete:function(){
-					console.log('192');
 				}
 			});
 		});

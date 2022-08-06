@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
-		fetch('http://www.eleninjaytech.com:58099/items/5?q=111').then(function (response) {
+		fetch('http://www.eleninjaytech.com:58099/items/5').then(function (response) {
 			console.log('fetch 1');
 			console.log(response.json());
 		}).then(function (data) {
@@ -11,7 +10,7 @@
 			console.log(data);
 		});
 
-		fetch('http://192.168.0.15:8099/items/5?q=111').then(function (response) {
+		fetch('http://192.168.0.15:8099/items/5').then(function (response) {
 			console.log('222 fetch 1');
 			console.log(response.json());
 		}).then(function (data) {

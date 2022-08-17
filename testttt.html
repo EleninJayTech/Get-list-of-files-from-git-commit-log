@@ -6,13 +6,12 @@
 	<script>
 		jQuery(function($){
 			$.ajax({
-				// url:'https://www.eleninjaytech.com/items/5?q=333',
-				url: "http://192.168.0.15:8099/items/5?q=111", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+				url:'https://www.eleninjaytech.com/items/5',
 				dataType:'json',
 				method: "GET",
-				// data:{
-				// 	'q':333
-				// },
+				data:{
+					'q':333
+				},
 				success:function(result){
 					console.log(result);
 				},
